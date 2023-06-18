@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express');
 const {
   getContacts,
   getContactById,
@@ -13,6 +13,6 @@ router.get('/', getContacts);
 router.get('/:contactId', getContactById);
 router.post('/', createContact);
 router.delete('/:contactId', deleteContact);
-router.put('/:contactId', changeContact)
+router.put('/:contactId', changeContact);
 
 module.exports = router;
