@@ -1,4 +1,5 @@
 const { ctrlWrapper } = require("../utils");
+const { register, login } = require("./auth");
 
 const {
   getContacts,
@@ -9,11 +10,6 @@ const {
   updateStatusContact
 } = require("./contactsControllers");
 
-const {
-  getUsers,
-  createUser,
-} = require("./userControllers");
-
 module.exports = {
   getContacts: ctrlWrapper(getContacts),
   getContactById: ctrlWrapper(getContactById),
@@ -21,6 +17,6 @@ module.exports = {
   deleteContact: ctrlWrapper(deleteContact),
   changeContact: ctrlWrapper(changeContact),
   updateStatusContact: ctrlWrapper(updateStatusContact),
-  getUsers: ctrlWrapper(getUsers),
-  createUser: ctrlWrapper(createUser)
+  register: ctrlWrapper(register),
+  login: ctrlWrapper(login)
 }
