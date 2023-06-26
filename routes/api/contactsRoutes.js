@@ -7,10 +7,12 @@ const {
   changeContact,
   updateStatusContact
 } = require('../../controllers');
-const { isValidId, validateBody } = require('../../middlewares');
+const { isValidId, validateBody, authenticate } = require('../../middlewares');
 const { schemas } = require('../../models/contactSchema');
 
 const router = express.Router();
+
+router.use(authenticate);
 
 router
   .route("/")
@@ -19,9 +21,10 @@ router
 
 router
   .route("/:contactId")
-  .get(isValidId, getContactById)
-  .delete(isValidId, deleteContact)
-  .put(isValidId, validateBody(schemas.addSchema), changeContact)
+  .all(isValidId)
+  .get(getContactById)
+  .delete(deleteContact)
+  .put(validateBody(schemas.addSchema), changeContact)
 
 router
   .route("/:contactId/favorite")

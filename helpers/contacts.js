@@ -1,6 +1,6 @@
 const { Contact } = require('../models/contactSchema');
 
-const listContacts = () => Contact.find();
+const listContacts = (owner) => Contact.find({ owner }).populate("owner", "email");
 
 const findContactById = (contactId) => Contact.findOne({ _id: contactId });
 

@@ -1,7 +1,7 @@
 const Joi = require('joi');
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-const contactSchema = new mongoose.Schema({
+const contactSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -17,6 +17,11 @@ const contactSchema = new mongoose.Schema({
   favorite: {
     type: Boolean,
     default: false,
+  },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
   }
 });
 
@@ -36,7 +41,7 @@ const schemas = {
   updateFavoriteSchema,
 };
 
-const Contact = mongoose.model('Contact', contactSchema);
+const Contact = model("Contact", contactSchema);
 
 module.exports = {
   Contact,

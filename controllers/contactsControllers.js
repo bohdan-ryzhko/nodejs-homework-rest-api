@@ -6,8 +6,9 @@ const {
 	updateContact,
 } = require("../helpers/contacts");
 
-const getContacts = async (_, res) => {
-	const contacts = await listContacts();
+const getContacts = async (req, res) => {
+	const { _id: owner } = req.user;
+	const contacts = await listContacts(owner);
 	res.status(200).json({ contacts });
 }
 
@@ -19,8 +20,8 @@ const getContactById = async (req, res) => {
 }
 
 const createContact = async (req, res) => {
-	const newContact = await addContact(req.body);
-
+	const { _id: owner } = req.user;
+	const newContact = await addContact({ ...req.body, owner });
 	res.status(201).json({ contact: newContact });
 }
 

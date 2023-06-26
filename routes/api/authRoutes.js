@@ -1,7 +1,7 @@
 const express = require("express");
 const { validateBody } = require("../../middlewares");
 const { schemas } = require("../../models/userSchema");
-const { register, login } = require("../../controllers");
+const { register, login, logout } = require("../../controllers");
 
 const router = express.Router();
 
@@ -11,6 +11,10 @@ router
 
 router
 	.route("/login")
-	.post(validateBody(schemas.validateUserData), login)
+	.post(validateBody(schemas.validateUserData), login);
+
+router
+	.route("/logout")
+	.post(validateBody(schemas.validateLogoutUser), logout);
 
 module.exports = router;

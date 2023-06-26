@@ -31,10 +31,32 @@ const login = async (req, res) => {
 
 	const token = jwt.sign(payload, SECRET_KEY, { expiresIn: EXPIRES_IN });
 
-	res.status(200).json({ token });
+	const updatedAndAddedTokenUser = await User.findOneAndUpdate(
+		{ email },
+		{ $set: { token } },
+		{ new: true }
+	);
+
+	res.status(200).json({ user: updatedAndAddedTokenUser });
+}
+
+const logout = async (req, res) => {
+	const { id } = req.body;
+	const user = await User.findById(id);
+
+	if (!user) throw HttpError(401);
+
+	await User.findOneAndUpdate(
+		{ _id: id },
+		{ $set: { token: "" } },
+		{ new: true }
+	);
+
+	res.status(204);
 }
 
 module.exports = {
 	register,
 	login,
+	logout,
 }

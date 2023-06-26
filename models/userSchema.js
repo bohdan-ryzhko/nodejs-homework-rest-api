@@ -25,10 +25,6 @@ const userSchema = new Schema({
 	token: {
 		type: String,
 		default: null,
-	},
-	owner: {
-		type: Schema.Types.ObjectId,
-		ref: 'user',
 	}
 }, { versionKey: false, timestamps: true });
 
@@ -39,8 +35,13 @@ const validateUserData = Joi.object({
 	password: Joi.string().min(6).required(),
 });
 
+const validateLogoutUser = Joi.object({
+	id: Joi.string().required(),
+});
+
 const schemas = {
 	validateUserData,
+	validateLogoutUser
 }
 
 const User = model("User", userSchema);
