@@ -55,8 +55,20 @@ const logout = async (req, res) => {
 	res.status(204);
 }
 
+const getCurrentUserByToken = async (req, res) => {
+	const { authorization = "" } = req.headers;
+	const [_, token] = authorization.split(" ");
+
+	const currentUser = await User.findOne({ token }).select("-createdAt -updatedAt");
+
+	if (!currentUser) throw HttpError(401);
+
+	res.status(200).json({ user: currentUser });
+}
+
 module.exports = {
 	register,
 	login,
 	logout,
+	getCurrentUserByToken,
 }
