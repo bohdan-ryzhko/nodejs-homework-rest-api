@@ -1,5 +1,5 @@
 const { ctrlWrapper } = require("../utils");
-const { register, login, logout, getCurrentUserByToken } = require("./authControllers");
+const { register, login, logout, getCurrentUserByToken, updateAvatar } = require("./authControllers");
 
 const {
   getContacts,
@@ -21,4 +21,5 @@ module.exports = {
   login: ctrlWrapper(login),
   logout: ctrlWrapper(logout),
   getCurrentUserByToken: ctrlWrapper(getCurrentUserByToken),
+  updateAvatar: ctrlWrapper(updateAvatar),
 }
