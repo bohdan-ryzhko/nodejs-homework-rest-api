@@ -30,6 +30,14 @@ const userSchema = new Schema({
 		type: String,
 		required: true,
 	},
+	verify: {
+		type: Boolean,
+		default: false,
+	},
+	verificationCode: {
+		type: String,
+		default: "",
+	},
 }, { versionKey: false, timestamps: true });
 
 userSchema.post("save", handleMongooseError);
@@ -39,13 +47,18 @@ const validateUserData = Joi.object({
 	password: Joi.string().min(6).required(),
 });
 
+const emailSchema = Joi.object({
+	email: Joi.string().pattern(emailRegex).required(),
+});
+
 const validateLogoutUser = Joi.object({
 	id: Joi.string().required(),
 });
 
 const schemas = {
 	validateUserData,
-	validateLogoutUser
+	validateLogoutUser,
+	emailSchema
 }
 
 const User = model("User", userSchema);
